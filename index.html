@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="SWE-Review: Closing the Loop on Issue Resolution with Agentic Code Review">
+  <meta name="keywords" content="code review, software engineering, LLM, agentic, SWE-bench">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SWE-Review: Closing the Loop on Issue Resolution with Agentic Code Review</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="SWE-Review: Closing the Loop on Issue Resolution with Agentic Code Review">
+  <meta property="og:description" content="A framework for agentic code review that closes the loop on AI-assisted issue resolution. Benchmark, dataset, and trained models.">
+  <meta property="og:image" content="https://swe-lego.github.io/SWE-Review/static/figures/pipeline_overview.png">
+  <meta property="og:url" content="https://swe-lego.github.io/SWE-Review/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SWE-Review: Closing the Loop on Issue Resolution with Agentic Code Review">
+  <meta name="twitter:description" content="A framework for agentic code review that closes the loop on AI-assisted issue resolution.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="./static/figures/swe_review_icon.png" type="image/png">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+</head>
+<body>
+
+<!-- Hero: Title + Authors + Links -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"><img src="./static/figures/swe_review_icon.png" alt="SWE-Review" style="height: 1.5em; vertical-align: middle; margin-right: 0.2em;">SWE-Review</h1>
+          <h2 class="title is-3 publication-title" style="margin-top: -0.5rem;">Closing the Loop on Issue Resolution with Agentic Code Review</h2>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Ruoyu Wang<sup>*1</sup>,</span>
+            <span class="author-block">Jierun Chen<sup>*2</sup>,</span>
+            <span class="author-block">Shaowei Wang<sup>2</sup>,</span>
+            <span class="author-block">Chaofan Tao<sup>2</sup>,</span>
+            <span class="author-block">Sidi Yang<sup>3</sup>,</span>
+            <span class="author-block">Yuxin Jiang<sup>2</sup>,</span>
+            <span class="author-block">Kim-Hui Yap<sup>1</sup>,</span>
+            <span class="author-block">Lifeng Shang<sup>2</sup>,</span>
+            <span class="author-block">Xiaohui Li<sup>2</sup>,</span>
+            <span class="author-block">Haoli Bai<sup>†2</sup></span>
+          </div>
+          <div class="is-size-5 publication-authors" style="margin-top: 0.25rem;">
+            <span class="author-block"><sup>1</sup>NTU,</span>
+            <span class="author-block"><sup>2</sup>Huawei Technologies,</span>
+            <span class="author-block"><sup>3</sup>HKU</span>
+          </div>
+          <div class="is-size-6 publication-authors" style="margin-top: 0.25rem; color: #666;">
+            <span class="author-block"><sup>*</sup>Equal contribution&nbsp;&nbsp;<sup>†</sup>Corresponding author</span>
+          </div>
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://github.com/SWE-Lego/SWE-Review/blob/main/assets/paper.pdf" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span><span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/SWE-Lego/SWE-Review" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span><span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/SWE-Lego/SWE-Review-Bench" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-database"></i></span><span>Benchmark</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://huggingface.co/collections/SWE-Lego/swe-review" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-robot"></i></span><span>Datasets & Models</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/SWE-Lego/cc-swe-review" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-plug"></i></span><span>Claude Code Plugin</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Hero Visual: Pipeline Figure + Summary -->
+<section class="section" id="pipeline" style="padding-top: 1rem; padding-bottom: 2rem;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <p class="has-text-centered" style="margin-bottom: 0.75rem; font-style: italic; color: #555;">
+          ▶ SWE-Review in action — resolving a real GitHub issue with the generate–review–revise loop in Claude Code.
+        </p>
+        <figure class="image" style="margin-bottom: 1.5rem;">
+          <img src="./static/figures/demo.gif" alt="SWE-Review Demo" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        </figure>
+        <p class="is-size-5 has-text-justified" style="margin-bottom: 1.5rem;">
+          AI coding agents can propose PRs, but often lack a reliable way to diagnose failures and guide revision. <span class="takeaway">SWE-Review closes this loop</span> — agentic code review turns one-shot generation into iterative improvement.
+        </p>
+        <figure class="image">
+          <img src="./static/figures/pipeline_overview.png" alt="SWE-Review Pipeline">
+        </figure>
+        <p class="has-text-justified" style="margin-top: 0.75rem; font-style: italic;">
+          <strong>Figure 1:</strong> SWE-Review turns one-shot PR generation into closed-loop issue resolution. The generate–review–revise loop continuously raises resolve rate across three PR generators of varying capability.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Abstract + Key Stats -->
+<section class="section" style="background-color: #fafafa;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <h2 class="title is-3 has-text-centered"><strong>Abstract</strong></h2>
+        <div class="content has-text-justified">
+          <p>
+            We introduce <span class="takeaway">SWE-Review</span>, a framework for closing the issue-resolution loop with agentic code review. A reviewer agent explores the repository, produces a structured diagnosis, and drives revision — turning one-shot PR generation into a generate–review–revise loop. Key results:
+          </p>
+          <ul>
+            <li><a href="#pipeline"><span class="takeaway">Closed-loop pipeline</span></a> — The generate–review–revise loop continuously improves PRs, raising resolve rate by up to +29.4pp.</li>
+            <li><a href="#tts"><span class="takeaway">Test-time scaling</span></a> — Review-guided iterative revision achieves 3.7× the TTS gain at 6.7× the efficiency of independent resampling.</li>
+            <li><a href="#agentic-vs-singleturn"><span class="takeaway">Agentic &gt; single-turn</span></a> — Outperforms fixed-context review in both decision accuracy and revision usefulness, with the largest gains on harder tasks.</li>
+            <li><a href="#learning"><span class="takeaway">Training transfer</span></a> — Mixed training improves direct resolve rate and enables a self-contained review-then-revise loop.</li>
+          </ul>
+          <p>To support reproducible research, we release:</p>
+          <ul>
+            <li><a href="#benchmark"><span class="takeaway">SWE-Review-Bench</span></a> — 1,384 candidate PRs across three quality tiers with executable verification.</li>
+            <li><a href="#dataset"><span class="takeaway">SWE-Review-Traj</span></a> — 8,914 decision-correct agentic review trajectories for open reviewer training.</li>
+          </ul>
+        </div>
+        <div class="columns" style="margin-top: 1.5rem;">
+          <div class="column">
+            <div class="box has-text-centered highlight-box">
+              <p class="title is-2 highlight-number">+29.4</p>
+              <p class="subtitle is-6">pp Resolve Rate<br><span class="is-size-7">closed-loop gain</span></p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="box has-text-centered highlight-box">
+              <p class="title is-2 highlight-number" style="white-space: nowrap;">3.7× / 6.7×</p>
+              <p class="subtitle is-6">Gain / Efficiency<br><span class="is-size-7">test-time scaling</span></p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="box has-text-centered highlight-box">
+              <p class="title is-2 highlight-number">1,384</p>
+              <p class="subtitle is-6">Benchmark PRs<br><span class="is-size-7">3 quality tiers</span></p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="box has-text-centered highlight-box">
+              <p class="title is-2 highlight-number">8,914</p>
+              <p class="subtitle is-6">Trajectories<br><span class="is-size-7">for open training</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Test-Time Scaling -->
+<section class="section" id="tts">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <h2 class="title is-3 has-text-centered"><strong>Review-Guided Test-Time Scaling for Issue Resolution</strong></h2>
+        <div class="content has-text-justified">
+          <p>
+            At test time, trained reviewers outperform dedicated verifiers in both effectiveness and efficiency. The approval decision gates sampling; the structured diagnosis is fed back for targeted revision. <span class="takeaway">Structured diagnoses enable iterative refinement that scalar scorers cannot implement, achieving higher resolve rates at a fraction of the sample cost.</span>
+          </p>
+        </div>
+        <div class="columns">
+          <div class="column is-6">
+            <figure class="image">
+              <img loading="lazy" src="./static/figures/fig_tts_instruct2507_ttsk_with_iterative.png" alt="TTS resolve rate">
+            </figure>
+            <p class="has-text-centered" style="margin-top: 0.75rem; font-style: italic;">
+              <strong>Figure 2(a):</strong> Resolve rate vs sample budget.
+            </p>
+          </div>
+          <div class="column is-6">
+            <figure class="image">
+              <img loading="lazy" src="./static/figures/fig_tts_instruct2507_efficiency_with_iterative.png" alt="TTS efficiency">
+            </figure>
+            <p class="has-text-centered" style="margin-top: 0.75rem; font-style: italic;">
+              <strong>Figure 2(b):</strong> Actual samples spent.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Agentic vs Single-Turn -->
+<section class="section" id="agentic-vs-singleturn" style="background-color: #fafafa;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <h2 class="title is-3 has-text-centered"><strong>Agentic Beats Single-Turn Review</strong></h2>
+        <div class="content has-text-justified">
+          <p>
+            Holding the reviewer model fixed (Claude Opus 4.6), agentic review consistently outperforms single-turn review (diff-only and diff+context) in both DA and RRR. The main advantage is not merely having more context, but being able to adaptively gather the correct evidence for the specific PR under review. <span class="takeaway">Interactive evidence gathering is especially valuable when candidate PRs are lower quality and more likely to contain partial or non-local fixes.</span>
+          </p>
+        </div>
+        <div class="table-container">
+          <table class="table is-striped is-hoverable is-fullwidth">
+            <thead>
+              <tr>
+                <th style="width: 25%;">Review Mode</th>
+                <th colspan="2" class="has-text-centered" style="width: 25%;">GLM-5<br>(high)</th>
+                <th colspan="2" class="has-text-centered" style="width: 25%;">Qwen3-Coder-30B-A3B<br>-Instruct (medium)</th>
+                <th colspan="2" class="has-text-centered" style="width: 25%;">Qwen3-30B-A3B<br>-Instruct-2507 (low)</th>
+              </tr>
+              <tr>
+                <th></th>
+                <th class="has-text-centered">DA ↑</th><th class="has-text-centered">RRR ↑</th>
+                <th class="has-text-centered">DA ↑</th><th class="has-text-centered">RRR ↑</th>
+                <th class="has-text-centered">DA ↑</th><th class="has-text-centered">RRR ↑</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Single-turn (diff-only)</td><td class="has-text-centered">71.3</td><td class="has-text-centered">71.4</td><td class="has-text-centered">72.0</td><td class="has-text-centered">56.7</td><td class="has-text-centered">80.8</td><td class="has-text-centered">41.2</td></tr>
+              <tr><td>Single-turn (diff+context)</td><td class="has-text-centered">69.8</td><td class="has-text-centered">72.6</td><td class="has-text-centered">73.8</td><td class="has-text-centered">57.6</td><td class="has-text-centered">82.7</td><td class="has-text-centered">44.1</td></tr>
+              <tr style="background-color: #f0f7ff; font-weight: 600;"><td>Agentic review</td><td class="has-text-centered">75.6</td><td class="has-text-centered">75.2</td><td class="has-text-centered">80.5</td><td class="has-text-centered">67.3</td><td class="has-text-centered">89.4</td><td class="has-text-centered">52.6</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="has-text-justified" style="margin-top: 0.75rem; font-style: italic;"><strong>Table 1:</strong> All settings use Claude Opus 4.6 as reviewer. Gains are largest on the hardest split: +6.7pp DA, +8.5pp RRR over best single-turn. DA (Decision Accuracy ↑) = fraction of correct approve/reject decisions. RRR (Resolve Rate after Revision ↑) = final resolve rate after the review-then-revise loop.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Learning from Trajectories -->
+<section class="section" id="learning">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <h2 class="title is-3 has-text-centered"><strong>Review Trajectories Generalize to Issue Resolution</strong></h2>
+        <div class="content has-text-justified">
+          <p>
+            Review trajectories can be mixed with issue-resolution data to produce a single model that is better at both roles. <span class="takeaway">Review and resolution share a transferable repository-reasoning skill: mixed training simultaneously improves one-shot issue resolution and enables a self-contained generate–review–revise loop.</span>
+          </p>
+        </div>
+        <div class="table-container">
+          <table class="table is-striped is-hoverable is-fullwidth">
+            <thead>
+              <tr>
+                <th>Training Data</th>
+                <th class="has-text-centered">RR ↑<br><span class="is-size-7 has-text-grey">one-shot resolve</span></th>
+                <th class="has-text-centered">CR ↑<br><span class="is-size-7 has-text-grey">review ability</span></th>
+                <th class="has-text-centered">DA ↑<br><span class="is-size-7 has-text-grey">review quality</span></th>
+                <th class="has-text-centered">RRR ↑<br><span class="is-size-7 has-text-grey">self-review + revise</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Issue-resolution 1k</td><td class="has-text-centered">27.6</td><td class="has-text-centered">9.4</td><td class="has-text-centered">50.0</td><td class="has-text-centered">27.6</td></tr>
+              <tr style="background-color: #f0f7ff;"><td><strong>+ Review 1k</strong></td><td class="has-text-centered"><strong>28.4</strong> <span class="has-text-success is-size-7">+0.8</span></td><td class="has-text-centered"><strong>67.6</strong></td><td class="has-text-centered"><strong>67.4</strong></td><td class="has-text-centered"><strong>34.6</strong> <span class="has-text-success is-size-7">+7.0</span></td></tr>
+              <tr><td>Issue-resolution 2k</td><td class="has-text-centered">31.2</td><td class="has-text-centered">13.4</td><td class="has-text-centered">51.7</td><td class="has-text-centered">31.2</td></tr>
+              <tr style="background-color: #f0f7ff;"><td><strong>+ Review 2k</strong></td><td class="has-text-centered"><strong>36.8</strong> <span class="has-text-success is-size-7">+5.6</span></td><td class="has-text-centered"><strong>85.4</strong></td><td class="has-text-centered"><strong>69.5</strong></td><td class="has-text-centered"><strong>41.8</strong> <span class="has-text-success is-size-7">+10.6</span></td></tr>
+              <tr><td>Issue-resolution 3k</td><td class="has-text-centered">34.0</td><td class="has-text-centered">33.5</td><td class="has-text-centered">51.6</td><td class="has-text-centered">34.0</td></tr>
+              <tr style="background-color: #f0f7ff;"><td><strong>+ Review 3k</strong></td><td class="has-text-centered"><strong>37.8</strong> <span class="has-text-success is-size-7">+3.8</span></td><td class="has-text-centered"><strong>87.4</strong></td><td class="has-text-centered"><strong>72.3</strong></td><td class="has-text-centered"><strong>41.2</strong> <span class="has-text-success is-size-7">+7.2</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="has-text-justified" style="margin-top: 0.75rem; font-style: italic;"><strong>Table 2:</strong> Qwen3-8B fine-tuned with issue-resolution trajectories alone vs. paired with an equal volume of review trajectories. RR (Resolve Rate ↑) = one-shot resolve rate on SWE-bench Verified. CR (Completion Rate ↑) = fraction of instances with a parseable review.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SWE-Review-Bench -->
+<section class="section" id="benchmark" style="background-color: #fafafa;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <h2 class="title is-3 has-text-centered"><strong>SWE-Review-Bench</strong></h2>
+        <div class="content has-text-justified">
+          <p>
+            We construct SWE-Review-Bench from 500 SWE-bench Verified issues with executable test suites. Three models of varying capability generate <span class="takeaway">1,384 candidate PRs</span> spanning high-, medium-, and low-quality distributions. We evaluate review with three complementary metrics: <em>Completion Rate (CR)</em> measures whether the reviewer produces a parseable final review; <em>Decision Accuracy (DA)</em> measures whether the approve/request-changes decision is correct; <em>Resolve Rate after Revision (RRR)</em> measures whether the review improves the final patch outcome.
+          </p>
+        </div>
+        <div class="table-container" style="margin-bottom: 2rem;">
+          <table class="table is-striped is-hoverable is-fullwidth">
+            <thead><tr><th>PR Generator</th><th>Resolve Rate</th><th># PRs</th></tr></thead>
+            <tbody>
+              <tr><td>GLM-5 (high)</td><td>72.2%</td><td>500</td></tr>
+              <tr><td>Qwen3-Coder-30B-A3B<br>-Instruct (medium)</td><td>50.9%</td><td>462</td></tr>
+              <tr><td>Qwen3-30B-A3B<br>-Instruct-2507 (low)</td><td>27.5%</td><td>422</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3 class="title is-4 has-text-centered">Leaderboard</h3>
+        <div class="tabs is-centered is-boxed" id="leaderboard-tabs">
+          <ul>
+            <li class="is-active" data-split="glm5"><a>GLM-5 (high)</a></li>
+            <li data-split="coder30b"><a>Qwen3-Coder-30B-A3B-Instruct (medium)</a></li>
+            <li data-split="instruct30b"><a>Qwen3-30B-A3B-Instruct-2507 (low)</a></li>
+          </ul>
+        </div>
+        <div class="table-container">
+          <table class="table is-striped is-hoverable is-fullwidth" id="leaderboard-table">
+            <thead>
+              <tr>
+                <th>Reviewer Model</th>
+                <th class="sortable" data-col="cr">CR (%) <i class="fas fa-sort"></i></th>
+                <th class="sortable" data-col="da">DA (%) <i class="fas fa-sort"></i></th>
+                <th class="sortable" data-col="rrr">RRR (%) <i class="fas fa-sort"></i></th>
+                <th class="sortable" data-col="delta">Δ RR <i class="fas fa-sort"></i></th>
+              </tr>
+            </thead>
+            <tbody id="leaderboard-body"></tbody>
+          </table>
+        </div>
+        <p class="has-text-justified" style="margin-top: 0.75rem; font-style: italic;"><strong>Table 3:</strong> SWE-Review-Bench Leaderboard. SWE-Review-8B and SWE-Review-30B-A3B are Qwen3 models fine-tuned on SWE-Review-Traj. Click column headers to sort. Δ RR = improvement over no-review baseline.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SWE-Review-Traj -->
+<section class="section" id="dataset">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <h2 class="title is-3 has-text-centered"><strong>SWE-Review-Traj</strong></h2>
+        <div class="content has-text-justified">
+          <p>
+            High-quality trajectories for agentic code review remain scarce in the open-source community. We construct <span class="takeaway">SWE-Review-Traj</span>, a dataset of <span class="takeaway">8,914 decision-correct agentic review trajectories</span> to support training and evaluation of open reviewers:
+          </p>
+          <ol class="pipeline-steps" style="list-style: none; counter-reset: step; padding-left: 0;">
+            <li style="counter-increment: step; position: relative; padding-left: 3.5rem; padding-bottom: 1.5rem; border-left: 3px solid #3273dc; margin-left: 0.75rem;">
+              <span style="position: absolute; left: -0.95rem; top: 0; width: 1.8rem; height: 1.8rem; background: #3273dc; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; line-height: 1;">1</span>
+              <strong>Candidate PR Generation</strong> — Three models generate patches for ~6,000 SWE-rebench issues (excluding any repository in SWE-Review-Bench to prevent leakage), producing 14,156 candidate PRs.
+            </li>
+            <li style="counter-increment: step; position: relative; padding-left: 3.5rem; padding-bottom: 1.5rem; border-left: 3px solid #3273dc; margin-left: 0.75rem;">
+              <span style="position: absolute; left: -0.95rem; top: 0; width: 1.8rem; height: 1.8rem; background: #3273dc; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; line-height: 1;">2</span>
+              <strong>Teacher Review</strong> — Open-weight GLM-5 with thinking enabled reviews each PR agentically via OpenHands-SDK. The prompt asks the teacher to first understand the issue and trace the root cause <em>before</em> inspecting the PR, avoiding confirmation bias.
+            </li>
+            <li style="counter-increment: step; position: relative; padding-left: 3.5rem; padding-bottom: 1.5rem; border-left: 3px solid #3273dc; margin-left: 0.75rem;">
+              <span style="position: absolute; left: -0.95rem; top: 0; width: 1.8rem; height: 1.8rem; background: #3273dc; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; line-height: 1;">3</span>
+              <strong>Decision-Correct Filtering</strong> — We retain trajectories where the reviewer correctly approves a resolving patch or correctly requests changes on a non-resolving one, yielding <strong>8,914 trajectories</strong>.
+            </li>
+            <li style="counter-increment: step; position: relative; padding-left: 3.5rem; padding-bottom: 0; border-left: 3px solid transparent; margin-left: 0.75rem;">
+              <span style="position: absolute; left: -0.95rem; top: 0; width: 1.8rem; height: 1.8rem; background: #3273dc; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; line-height: 1;">4</span>
+              <strong>Quality Validation</strong> — <em>Semantic:</em> Two judges (Claude Opus 4.6, GPT-5.4) rate diagnosis quality (mean &gt;3.0/5, Cohen's κ = 0.72). <em>Functional:</em> Diagnoses carry actionable information beyond the binary decision — revision RRR rises from 3% (no review) → 8% (decision only) → <strong>21% (teacher review)</strong> → 32% (oracle).
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Key Takeaways -->
+<section class="section" style="background-color: #fafafa;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <h2 class="title is-3 has-text-centered"><strong>Key Takeaways</strong></h2>
+        <div class="content">
+          <div class="box" style="background-color: #f0f7ff; border-left: 4px solid #3273dc;">
+            <p><strong style="color: #3273dc;">Closing the Loop Works</strong> — The generate–review–revise loop continuously improves PRs, raising resolve rate by up to +29.4 percentage points on SWE-bench Verified.</p>
+          </div>
+          <div class="box" style="background-color: #f0f7ff; border-left: 4px solid #3273dc;">
+            <p><strong style="color: #3273dc;">Structured Diagnoses Enable Efficient Test-Time Scaling</strong> — Review-guided iterative revision achieves 3.7× the test-time scaling gain at 6.7× the efficiency of independent resampling.</p>
+          </div>
+          <div class="box" style="background-color: #f0f7ff; border-left: 4px solid #3273dc;">
+            <p><strong style="color: #3273dc;">Review Trajectories Transfer to Issue Resolution</strong> — Mixed training with review data improves one-shot resolve rate (+5.6pp) and enables self-contained review-revise loops within a single model (+10.6pp).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BibTeX -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3 has-text-centered"><strong>Citation</strong></h2>
+    <pre><code>@article{wang2026swereview,
+  title={SWE-Review: Closing the Loop on Issue Resolution with Agentic Code Review},
+  author={Wang, Ruoyu and Chen, Jierun and Wang, Shaowei and Tao, Chaofan and Yang, Sidi and Jiang, Yuxin and Yap, Kim-Hui and Shang, Lifeng and Li, Xiaohui and Bai, Haoli},
+  journal={arXiv preprint},
+  year={2026}
+}</code></pre>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content has-text-centered">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> adopted from <a href="https://nerfies.github.io" target="_blank">Nerfies</a>.
+            Licensed under <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="./static/js/index.js"></script>
+</body>
+</html>
