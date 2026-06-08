@@ -1,0 +1,8 @@
+[task]
+instance_id = "example__repo-12345"
+
+[environment]
+image = "swebench/sweb.eval.x86_64.example_repo_12345:latest"
+
+[limits]
+timeout = 300
