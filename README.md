@@ -1,7 +1,7 @@
 <h1 align="center"> SWE-Review: Closing the Loop on Issue Resolution with Agentic Code Review </h1>
 
 <p align="center">
-<a href="https://github.com/SWE-Lego/SWE-Review/blob/main/assets/paper.pdf" > 📖 Paper</a>
+<a href="https://arxiv.org/abs/2607.06065" > 📖 Paper</a>
 •
 <a href="https://swe-lego.github.io/SWE-Review/" > 🌐 Project Page</a>
 •
@@ -331,7 +331,10 @@ The script handles:
 @article{wang2026swereview,
     title={SWE-Review: Closing the Loop on Issue Resolution with Agentic Code Review},
     author={Wang, Ruoyu and Chen, Jierun and Wang, Shaowei and Tao, Chaofan and Yang, Sidi and Jiang, Yuxin and Yap, Kim-Hui and Shang, Lifeng and Li, Xiaohui and Bai, Haoli},
-    journal={arXiv preprint},
     year={2026},
+    eprint={2607.06065},
+    archivePrefix={arXiv},
+    primaryClass={cs.SE},
+    url={https://arxiv.org/abs/2607.06065},
 }
 ```
