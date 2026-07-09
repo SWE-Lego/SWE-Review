@@ -328,13 +328,13 @@ The script handles:
 ## Citation 📝
 
 ```bibtex
-@article{wang2026swereview,
-    title={SWE-Review: Closing the Loop on Issue Resolution with Agentic Code Review},
-    author={Wang, Ruoyu and Chen, Jierun and Wang, Shaowei and Tao, Chaofan and Yang, Sidi and Jiang, Yuxin and Yap, Kim-Hui and Shang, Lifeng and Li, Xiaohui and Bai, Haoli},
-    year={2026},
-    eprint={2607.06065},
-    archivePrefix={arXiv},
-    primaryClass={cs.SE},
-    url={https://arxiv.org/abs/2607.06065},
+@misc{wang2026swereview,
+      title={SWE-Review: Closing the Loop on Issue Resolution with Agentic Code Review}, 
+      author={Ruoyu Wang and Jierun Chen and Shaowei Wang and Chaofan Tao and Sidi Yang and Yuxin Jiang and Kim-Hui Yap and Lifeng Shang and Xiaohui Li and Haoli Bai},
+      year={2026},
+      eprint={2607.06065},
+      archivePrefix={arXiv},
+      primaryClass={cs.SE},
+      url={https://arxiv.org/abs/2607.06065}, 
 }
 ```
