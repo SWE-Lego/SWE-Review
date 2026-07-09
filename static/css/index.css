@@ -1,0 +1,176 @@
+/* SWE-Review Project Page Styles */
+/* Nerfies/SWE-Lego template style */
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.publication-title {
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 700;
+  color: #363636;
+}
+
+.publication-authors {
+  font-family: 'Google Sans', sans-serif;
+  margin-bottom: 0.5rem;
+}
+
+.author-block {
+  margin-right: 0.5rem;
+}
+
+.publication-links {
+  margin-top: 1rem;
+}
+
+.link-block {
+  margin: 0.25rem;
+}
+
+.hero-body {
+  padding-top: 4rem;
+  padding-bottom: 1rem;
+}
+
+.section {
+  padding: 3rem 1.5rem;
+}
+
+/* Highlight boxes */
+.highlight-box {
+  border: none;
+  box-shadow: 0 2px 8px rgba(50, 115, 220, 0.08);
+}
+
+.highlight-number {
+  color: #3273dc;
+  font-family: 'Google Sans', sans-serif;
+}
+
+/* Leaderboard */
+.tabs li.is-active a {
+  border-bottom-color: #3273dc;
+  color: #3273dc;
+  font-weight: 600;
+}
+
+.tabs a {
+  font-family: 'Google Sans', sans-serif;
+}
+
+.table thead th.sortable {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.table thead th.sortable:hover {
+  background-color: #f0f0f0;
+}
+
+.table thead th.sort-asc .fa-sort::before {
+  content: "\f0de";
+}
+
+.table thead th.sort-desc .fa-sort::before {
+  content: "\f0dd";
+}
+
+.table td, .table th {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.table td:first-child, .table th:first-child {
+  text-align: left;
+}
+
+/* Section titles */
+.title.is-3 {
+  font-family: 'Google Sans', sans-serif;
+  margin-bottom: 1.5rem;
+}
+
+.title.is-5 {
+  font-family: 'Google Sans', sans-serif;
+  color: #3273dc;
+  margin-top: 1.5rem;
+}
+
+/* Content boxes */
+.box {
+  transition: transform 0.2s;
+}
+
+.box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Figures */
+figure.image img {
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* Footer */
+.footer {
+  padding: 2rem 1.5rem;
+  background-color: #fafafa;
+}
+
+/* BibTeX */
+#BibTeX pre {
+  background-color: #f5f5f5;
+  padding: 1.5rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .title.is-1 {
+    font-size: 1.75rem;
+  }
+  .highlight-number {
+    font-size: 1.5rem !important;
+  }
+  .columns .column.is-6 {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Section takeaway highlight */
+.content .takeaway,
+.takeaway {
+  color: #3273dc !important;
+  font-weight: 600;
+}
+.trained-row {
+  background-color: #f0f7ff;
+}
+
+/* Table row hover */
+.table tbody tr:hover {
+  background-color: #eef5ff !important;
+}
+
+/* Scroll fade-in animations */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-section.fade-in-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero should always be visible */
+.hero {
+  opacity: 1 !important;
+  transform: none !important;
+}
