@@ -1,10 +1,16 @@
 #!/bin/bash
 # Serve SWE-Review-Mixed-6K-8B (mixed-trained reviewer+generator) via vLLM
+#
+# This checkpoint is not published on HuggingFace — train it locally first:
+#   bash scripts/train/mixed_training/sft.sh
+# Then point CKPT at the resulting checkpoint directory.
 
 conda activate vllm
 
+CKPT=${CKPT:-saves/mixed_6k_8b/full/sft}
+
 python -m vllm.entrypoints.openai.api_server \
-    --model SWE-Lego/SWE-Review-Mixed-6K-8B \
+    --model "$CKPT" \
     --served-model-name SWE-Review-Mixed-6K-8B \
     --host 0.0.0.0 \
     --port 8000 \

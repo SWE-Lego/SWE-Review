@@ -42,7 +42,7 @@ When `--revision-url` is set, the script automatically decides per split:
 # Terminal 1: serve the reviewer model
 conda activate vllm
 python -m vllm.entrypoints.openai.api_server \
-    --model SWE-Lego/SWE-Review-8B \
+    --model Lego-X/SWE-Review-8B \
     --served-model-name SWE-Review-8B \
     --host 0.0.0.0 --port 8000 \
     --tensor-parallel-size 4 --gpu-memory-utilization 0.9 \
@@ -106,7 +106,7 @@ python scripts/data_pipeline/download_data.py --benchmark
 # 2. Serve your reviewer model (in a separate terminal)
 conda activate vllm
 python -m vllm.entrypoints.openai.api_server \
-    --model SWE-Lego/SWE-Review-8B \
+    --model Lego-X/SWE-Review-8B \
     --served-model-name SWE-Review-8B \
     --host 0.0.0.0 --port 8000 \
     --tensor-parallel-size 4 --gpu-memory-utilization 0.9 \

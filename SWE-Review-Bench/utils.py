@@ -164,7 +164,7 @@ def load_benchmark_split(split_name: str, data_dir: str = "data") -> list[dict]:
     # Try HuggingFace directly
     try:
         from datasets import load_dataset
-        ds = load_dataset("SWE-Lego/SWE-Review-Bench", split=split_name)
+        ds = load_dataset("Lego-X/SWE-Review-Bench", split=split_name)
         return ds.to_list()
     except Exception as e:
         raise FileNotFoundError(

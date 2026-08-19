@@ -28,7 +28,7 @@ def download_benchmark(output_dir: str = "data/swebench/benchmark/splits"):
 
     for split in splits:
         print(f"Downloading benchmark split: {split}...")
-        ds = load_dataset("SWE-Lego/SWE-Review-Bench", split=split)
+        ds = load_dataset("Lego-X/SWE-Review-Bench", split=split)
         data = ds.to_list()
 
         split_dir = output_path / split
@@ -88,7 +88,7 @@ def download_trajectories(output_dir: str = "data/trajectories"):
     output_path.mkdir(parents=True, exist_ok=True)
 
     print("Downloading SWE-Review-Traj...")
-    ds = load_dataset("SWE-Lego/SWE-Review-Traj", split="train")
+    ds = load_dataset("Lego-X/SWE-Review-Traj", split="train")
     data = ds.to_list()
     print(f"  Total trajectories: {len(data)}")
 
@@ -144,7 +144,7 @@ def download_sft_data(output_dir: str = "data/sft", tokenizer_name: str = "Qwen/
     tokenizer = AutoTokenizer.from_pretrained(tokenizer_name, trust_remote_code=True)
 
     print("Downloading trajectories for SFT...")
-    ds = load_dataset("SWE-Lego/SWE-Review-Traj", split="train")
+    ds = load_dataset("Lego-X/SWE-Review-Traj", split="train")
 
     # Filter decision-correct and convert to ShareGPT format
     sft_data = []

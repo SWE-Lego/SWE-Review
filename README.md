@@ -5,11 +5,11 @@
 •
 <a href="https://swe-lego.github.io/SWE-Review/" > 🌐 Project Page</a>
 •
-<a href="https://huggingface.co/datasets/SWE-Lego/SWE-Review-Bench" > 📊 Benchmark</a>
+<a href="https://huggingface.co/datasets/Lego-X/SWE-Review-Bench" > 📊 Benchmark</a>
 •
-<a href="https://huggingface.co/collections/SWE-Lego/swe-review" > 🤗 Datasets & Models</a>
+<a href="https://huggingface.co/collections/Lego-X/swe-review" > 🤗 Datasets & Models</a>
 •
-<a href="https://github.com/SWE-Lego/cc-swe-review" > 🔌 Claude Code Plugin</a>
+<a href="https://github.com/LegoX/cc-swe-review" > 🔌 Claude Code Plugin</a>
 </p>
 
 <p align="center">
@@ -28,7 +28,7 @@ Key results on SWE-bench Verified:
 
 ## Demo
 
-> ▶ SWE-Review in action — resolving a real GitHub issue with the generate–review–revise loop, powered by the [Claude Code plugin](https://github.com/SWE-Lego/cc-swe-review).
+> ▶ SWE-Review in action — resolving a real GitHub issue with the generate–review–revise loop, powered by the [Claude Code plugin](https://github.com/LegoX/cc-swe-review).
 
 <p align="center">
     <img src="assets/demo.gif" width="1000"/>
@@ -38,11 +38,11 @@ Key results on SWE-bench Verified:
 
 | Resource | Link | Description |
 |----------|------|-------------|
-| SWE-Review-Bench | [HuggingFace](https://huggingface.co/datasets/SWE-Lego/SWE-Review-Bench) | 1,384 AI-generated PRs across 3 quality tiers |
-| SWE-Review-Traj | [HuggingFace](https://huggingface.co/datasets/SWE-Lego/SWE-Review-Traj) | 8,914 decision-correct + 5,242 decision-incorrect review trajectories |
-| SWE-Review-8B | [HuggingFace](https://huggingface.co/SWE-Lego/SWE-Review-8B) | Qwen3-8B fine-tuned reviewer |
-| SWE-Review-30B-A3B | [HuggingFace](https://huggingface.co/SWE-Lego/SWE-Review-30B-A3B) | Qwen3-30B-A3B fine-tuned reviewer |
-| Claude Code Plugin | [GitHub](https://github.com/SWE-Lego/cc-swe-review) | Use SWE-Review directly in Claude Code |
+| SWE-Review-Bench | [HuggingFace](https://huggingface.co/datasets/Lego-X/SWE-Review-Bench) | 1,384 AI-generated PRs across 3 quality tiers |
+| SWE-Review-Traj | [HuggingFace](https://huggingface.co/datasets/Lego-X/SWE-Review-Traj) | 8,914 decision-correct + 5,242 decision-incorrect review trajectories |
+| SWE-Review-8B | [HuggingFace](https://huggingface.co/Lego-X/SWE-Review-8B) | Qwen3-8B fine-tuned reviewer |
+| SWE-Review-30B-A3B | [HuggingFace](https://huggingface.co/Lego-X/SWE-Review-30B-A3B) | Qwen3-30B-A3B fine-tuned reviewer |
+| Claude Code Plugin | [GitHub](https://github.com/LegoX/cc-swe-review) | Use SWE-Review directly in Claude Code |
 
 ## Repo Structure
 
@@ -63,7 +63,7 @@ SWE-Review/
 ## 1. 📦 Installation
 
 ```bash
-git clone https://github.com/SWE-Lego/SWE-Review.git
+git clone https://github.com/LegoX/SWE-Review.git
 cd SWE-Review
 ```
 
@@ -78,7 +78,7 @@ To serve a reviewer model (e.g., SWE-Review-8B):
 ```bash
 conda activate vllm
 python -m vllm.entrypoints.openai.api_server \
-    --model SWE-Lego/SWE-Review-8B \
+    --model Lego-X/SWE-Review-8B \
     --served-model-name SWE-Review-8B \
     --host 0.0.0.0 --port 8000 \
     --tensor-parallel-size 4 \
@@ -151,7 +151,7 @@ bash SWE-Review-Bench/run_full_benchmark.sh --mode api \
 # Terminal 1: serve reviewer (vllm env)
 conda activate vllm
 python -m vllm.entrypoints.openai.api_server \
-    --model SWE-Lego/SWE-Review-8B \
+    --model Lego-X/SWE-Review-8B \
     --served-model-name SWE-Review-8B \
     --host 0.0.0.0 --port 8000 \
     --tensor-parallel-size 4 --gpu-memory-utilization 0.9 \
@@ -185,7 +185,7 @@ Add `--skip-revision` to only compute DA without revision.
 
 ## 3. 🔬 Data Pipeline (Trajectory Collection)
 
-The full pipeline to collect review training data from scratch. We use [SWE-rebench](https://github.com/SWE-bench/SWE-rebench) (~6k instances with executable test suites) as the source.
+The full pipeline to collect review training data from scratch. We use [SWE-rebench](https://huggingface.co/datasets/nebius/SWE-rebench) (~6k instances with executable test suites) as the source.
 
 ```
 SWE-rebench instances → Patchgen (generate candidate PRs) → Review (teacher model)
@@ -295,7 +295,10 @@ python scripts/iterative_tts.py \
     --output outputs/tts/instruct2507_review8b_k4
 ```
 
-For self-critique (same model as both generator and reviewer):
+For self-critique (same model as both generator and reviewer). The mixed-trained
+checkpoint is not published on HuggingFace — train it locally via
+`scripts/train/mixed_training/sft.sh`, then serve it with
+`scripts/train/mixed_training/serve_vllm.sh`:
 ```bash
 # Single-model: mixed-trained 6K model on one port does both
 python scripts/iterative_tts.py \
@@ -321,7 +324,7 @@ The script handles:
 - **[SWE-bench](https://github.com/princeton-nlp/SWE-bench)** — Evaluation benchmark
 - **[OpenHands](https://github.com/All-Hands-AI/OpenHands)** — Agent scaffold
 - **[LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory)** — Training framework
-- **[Harbor](https://github.com/harbor-ai/harbor)** — Agent orchestration
+- **[Harbor](https://github.com/harbor-framework/harbor)** — Agent orchestration
 
 ---
 

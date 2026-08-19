@@ -13,7 +13,7 @@ python evaluation/extract_patches.py --results-dir "$OUTPUT_DIR" --output "${OUT
 # Run SWE-bench evaluation
 python -m swebench.harness.run_evaluation \
     --max_workers 10 \
-    --dataset_name "SWE-Lego/SWE-Review-Bench" \
+    --dataset_name "Lego-X/SWE-Review-Bench" \
     --report_dir "${OUTPUT_DIR}/swebench_results" \
     --cache_level instance \
     --predictions_path "${OUTPUT_DIR}/predictions.jsonl" \

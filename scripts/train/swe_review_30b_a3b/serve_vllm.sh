@@ -4,7 +4,7 @@
 conda activate vllm
 
 python -m vllm.entrypoints.openai.api_server \
-    --model SWE-Lego/SWE-Review-30B-A3B \
+    --model Lego-X/SWE-Review-30B-A3B \
     --served-model-name SWE-Review-30B-A3B \
     --host 0.0.0.0 \
     --port 8000 \

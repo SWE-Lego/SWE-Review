@@ -12,7 +12,7 @@
 #
 # Mode 2: Local (script manages vLLM deployment for reviewer and revision models)
 #   bash SWE-Review-Bench/run_full_benchmark.sh --mode local \
-#       --reviewer-model SWE-Lego/SWE-Review-8B \
+#       --reviewer-model Lego-X/SWE-Review-8B \
 #       --reviewer-parser hermes \
 #       --tp 4 \
 #       --gpu-ids 0,1,2,3 \
@@ -110,7 +110,7 @@ Usage:
 
   Mode 2 - Local (script deploys vLLM):
     bash SWE-Review-Bench/run_full_benchmark.sh --mode local \
-        --reviewer-model SWE-Lego/SWE-Review-8B \
+        --reviewer-model Lego-X/SWE-Review-8B \
         --reviewer-parser hermes \
         --tp 4 --port 8000 \
         --output outputs/benchmark/swe_review_8b
